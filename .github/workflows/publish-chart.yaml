@@ -34,4 +34,4 @@ jobs:
 
       - name: publish chart to gcr
         run: |
-          helm push openwebrx-$(cat VERSION).tgz oci://${{ env.GCR_IMAGE }}
+          helm push openwebrx-$(cat CHART_VERSION).tgz oci://${{ env.GCR_IMAGE }}
