@@ -1,0 +1,135 @@
+## README METADATA
+
+
+# Default values for openwebrx.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section Deployment Parameters
+## @param replicaCount Number of replicas to run.
+## @param imagePullSecrets [array] imagePullSecrets to pull image from a private registry.
+## @param nodeSelector Node selector for deployment. Do not use if leveraging Akri.
+## @param tolerations Tolerations to apply to pods.
+## @param affinity Affinity settings to apply to pods.
+replicaCount: 1
+imagePullSecrets: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+## @section Image Parameters
+## @param image.repository Image repository.
+## @param image.pullPolicy Pull policy for image.
+## @param image.tag Tag for the image.
+image:
+  repository: jketterl/openwebrx
+  pullPolicy: IfNotPresent
+  tag: ""
+
+## @section Service Account Parameters
+## @param serviceAccount.create Specifies whether a service account should be created.
+## @param serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
+## @param serviceAccount.annotations Annotations to attach to service account.
+## @param serviceAccount.name Name of service account. If not set and create is true, a name is generated using the fullname template.
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+## @section Pod Parameters
+## @param podAnnotations Additional annotations to add to pod(s).
+## @param podLabels Additional labels to add to pod(s).
+podAnnotations: {}
+podLabels: {}
+
+## @section Service Parameters
+## @param service.type Type of service to create.
+## @param service.nodePort NodePort to use if type is 'NodePort'.
+service:
+  type: ClusterIP
+  nodePort: 30072
+
+## @section Ingress Parameters
+## @param ingress.enabled Specifies whether to create an ingress.
+## @param ingress.className Ingress class name.
+## @param ingress.annotations Annotations to attach to ingress.
+## @param ingress.hosts[0].host Hostname for ingress.
+## @param ingress.hosts[0].paths[0].path Path for hostname.
+## @param ingress.hosts[0].paths[0].pathType Path type for hostname.
+## @param ingress.tls TLS configuration for ingress.
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+## @section Resource Parameters
+## @param resources Resource configurations. NOTE: See 'values.yaml' for an example of Akri usage.
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  # IF USING AKRI! Update `akri-sd-radio` to the `Configuration` name of your SDR.
+  #   akri.sh/akri-sd-radio: "1"
+
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+## @section Volumes Parameters
+## @param volumes Additional volumes to add.
+## @param volumeMounts additional volumeMounts to add.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+## @section Volumes Parameters
+## @param sdrConfig [default: See 'values.yaml'] SDR Configurations to inject into OpenWebRX. See 'values.yaml' for default string.
+sdrConfig: |-
+  sdrs = {
+    "rtlsdr": {
+        "name": "RTL-SDR USB Stick",
+        "type": "rtl_sdr",
+        "ppm": 0,
+        # you can change this if you use an upconverter. formula is:
+        # center_freq + lfo_offset = actual frequency on the sdr
+        # "lfo_offset": 0,
+        "profiles": {
+            "70cm": {
+                "name": "70cm Relais",
+                "center_freq": 104500000,
+                "rf_gain": 29,
+                "samp_rate": 2400000,
+                "start_freq": 104500000,
+                "start_mod": "nfm",
+            },
+            "2m": {
+                "name": "2m komplett",
+                "center_freq": 104500000,
+                "rf_gain": 29,
+                "samp_rate": 2048000,
+                "start_freq": 104500000,
+                "start_mod": "nfm",
+            },
+        },
+    }
+  }
