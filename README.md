@@ -2,6 +2,14 @@
 
 This is a Helm chart to deploy OpenWebRX into Kubernetes and dynamically configure SDR Configurations.
 
+## Usage
+
+To install this chart, utilize `helm` and execute the following:
+
+```bash
+helm install -n openwebrx --create-namespace oci://ghcr.io/atoy3731/openwebrx:0.1.0
+```
+
 ## Parameters
 
 ### Deployment Parameters
