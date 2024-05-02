@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  HELM_VERSION_TO_INSTALL: 3.5.0 # version of HELM to install
+  HELM_VERSION_TO_INSTALL: 3.14.4 # version of HELM to install
   GCR_IMAGE: ghcr.io/${{ github.repository_owner }}/openwebrx-chart
 
 jobs:
