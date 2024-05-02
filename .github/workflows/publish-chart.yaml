@@ -24,14 +24,14 @@ jobs:
           # Version of helm
           version: ${{ env.HELM_VERSION_TO_INSTALL }} # default is latest
 
-      - name: login to acr using helm
+      - name: login to gcr using helm
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.GCR_IMAGE }} --username ${{ github.repository_owner }} --password-stdin
 
-      - name: save helm chart to local registry
+      - name: package helm chart
         run: |
-          helm chart save ${{ github.workspace }}/src/azure-vote-helm-chart/ ${{ env.GCR_IMAGE }}:$(cat VERSION)
+          helm package .
 
-      - name: publish chart to acr
+      - name: publish chart to gcr
         run: |
-          helm chart push ${{ env.GCR_IMAGE }}:$(cat VERSION)
+          helm push openwebrx-$(cat VERSION).tgz oci://${{ env.GCR_IMAGE }}
