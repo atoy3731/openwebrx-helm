@@ -13,6 +13,8 @@ jobs:
     name: publish gcr
     runs-on: ubuntu-latest
     environment: prod
+    permissions:
+      packages: write
     steps:
       - uses: actions/checkout@v2
         name: checkout repo
