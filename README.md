@@ -7,7 +7,12 @@ This is a Helm chart to deploy OpenWebRX into Kubernetes and dynamically configu
 To install this chart, utilize `helm` and execute the following:
 
 ```bash
-helm install -n openwebrx --create-namespace oci://ghcr.io/atoy3731/openwebrx:0.1.0
+helm install -n openwebrx --create-namespace openwebrx oci://ghcr.io/atoy3731/openwebrx:0.1.0
+```
+
+If specifying custom values from the parameters below, create a `values.yaml` file locally and add it to your Helm command:
+```bash
+helm instal -n openwebrx --create-namespace -f values.yaml openwebrx oci://ghcr.io/atoy3731/openwebrx:0.1.0
 ```
 
 ## Parameters
