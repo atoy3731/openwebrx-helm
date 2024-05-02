@@ -7,7 +7,6 @@ on:
 
 env:
   HELM_VERSION_TO_INSTALL: 3.14.4 # version of HELM to install
-  GCR_IMAGE: ghcr.io/${{ github.repository_owner }}/openwebrx-chart
 
 jobs:
   build:
@@ -34,4 +33,4 @@ jobs:
 
       - name: publish chart to gcr
         run: |
-          helm push openwebrx-$(cat CHART_VERSION).tgz oci://${{ env.GCR_IMAGE }}
+          helm push openwebrx-$(cat CHART_VERSION).tgz oci://ghcr.io/${{ github.repository_owner }}
